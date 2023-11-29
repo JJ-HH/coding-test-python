@@ -1,5 +1,7 @@
 from random import randint
 
+import argparse
+
 
 def sort_by_bubble(arr):
     _arr = arr[:]
@@ -8,6 +10,7 @@ def sort_by_bubble(arr):
         for j in range(1, _length):
             if _arr[j - 1] > _arr[j]:
                 _arr[j - 1], _arr[j] = _arr[j], _arr[j - 1]
+                
     return _arr
 
 def generate_rnd_arr(length, rand_range):
@@ -18,8 +21,20 @@ def generate_rnd_arr(length, rand_range):
     return _arr
 
 
+def positive_int(value):
+    ivalue = int(value)
+    if ivalue <= 0:
+        raise argparse.ArgumentTypeError(f"{value} is not a positive integer")
+    return ivalue
+
+
 if __name__ == "__main__":
-    rand_arr = generate_rnd_arr(10, 10)
+    parser = argparse.ArgumentParser(description="Please add array length and power for random numbers. Defaults are both 10")
+    parser.add_argument('length', metavar='L', type=positive_int, default=10, nargs='?', help='Array length')
+    parser.add_argument('power', metavar='P', type=positive_int, default=10, nargs='?', help='Power for random numbers')
+    args = parser.parse_args()
+
+    rand_arr = generate_rnd_arr(args.length, args.power)
     sorted_rand_arr = sort_by_bubble(rand_arr)
     print(rand_arr)
     print(sorted_rand_arr)
