@@ -3,7 +3,7 @@ from random import randint
 import argparse
 
 
-def sort_by_insertion(arr):
+def sort_by_insertion_diff_from_front(arr):
     _arr = arr[:]
     _length = len(_arr)
     for i in range(0, _length - 1):
@@ -14,6 +14,19 @@ def sort_by_insertion(arr):
                 _arr[j+1: i+1] = _arr[j: i] 
                 _arr[j] = key
                 break
+    return _arr
+
+def sort_by_insertion(arr):
+    _arr = arr[:]
+    _length = len(_arr)
+    for i in range(0, _length - 1):
+        j = i
+        i += 1
+        key = _arr[i]
+        while j >= 0 and _arr[j] >= key:
+            _arr[j+1] = _arr[j]
+            j -= 1
+        _arr[j+1] = key
     return _arr
 
 def generate_rnd_arr(length, rand_range):
